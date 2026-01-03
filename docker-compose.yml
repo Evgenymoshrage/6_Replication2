@@ -1,0 +1,111 @@
+version: "3.9"
+
+services:
+  # ---------------- UserDB Shards ----------------
+  userdb_shard_1:
+    # Имя сервиса в Docker Compose
+    image: mysql:8.0 # Docker-образ
+    container_name: userdb_shard_1 # Имя контейнера в Docker
+    environment:
+      # Переменные окружения для MySQL
+      MYSQL_ROOT_PASSWORD: rootpass # Пароль root-пользователя MySQL
+      MYSQL_DATABASE: userdb # Создаёт базу данных userdb при первом запуске контейнера
+      MYSQL_USER: user # Создаёт обычного пользователя user
+      MYSQL_PASSWORD: userpass # Задаёт пароль для этого пользователя
+    ports:
+      - "33061:3306" # Проброс портов из контейнера на хост
+    volumes:
+      - ./sql/userdb_shard_1:/docker-entrypoint-initdb.d # Папка с SQL-скриптами
+
+  userdb_shard_2:
+    image: mysql:8.0
+    container_name: userdb_shard_2
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: userdb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpass
+    ports:
+      - "33062:3306"
+    volumes:
+      - ./sql/userdb_shard_2:/docker-entrypoint-initdb.d
+
+  userdb_shard_3:
+    image: mysql:8.0
+    container_name: userdb_shard_3
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: userdb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpass
+    ports:
+      - "33063:3306"
+    volumes:
+      - ./sql/userdb_shard_3:/docker-entrypoint-initdb.d
+
+  # ---------------- CatalogDB Shards ----------------
+  catalogdb_shard_1:
+    image: mysql:8.0
+    container_name: catalogdb_shard_1
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: catalogdb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpass
+    ports:
+      - "33071:3306"
+    volumes:
+      - ./sql/catalogdb_shard_1:/docker-entrypoint-initdb.d
+
+  catalogdb_shard_2:
+    image: mysql:8.0
+    container_name: catalogdb_shard_2
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: catalogdb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpass
+    ports:
+      - "33072:3306"
+    volumes:
+      - ./sql/catalogdb_shard_2:/docker-entrypoint-initdb.d
+
+  catalogdb_shard_3:
+    image: mysql:8.0
+    container_name: catalogdb_shard_3
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: catalogdb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpass
+    ports:
+      - "33073:3306"
+    volumes:
+      - ./sql/catalogdb_shard_3:/docker-entrypoint-initdb.d
+
+  # ---------------- StoreDB Master/Slave ----------------
+  storedb_master:
+    image: mysql:8.0
+    container_name: storedb_master
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: storedb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpass
+    ports:
+      - "33081:3306"
+    volumes:
+      - ./sql/storedb_master:/docker-entrypoint-initdb.d
+
+  storedb_slave:
+    image: mysql:8.0
+    container_name: storedb_slave
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: storedb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpass
+    ports:
+      - "33082:3306"
+    volumes:
+      - ./sql/storedb_slave:/docker-entrypoint-initdb.d

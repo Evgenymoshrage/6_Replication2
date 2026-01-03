@@ -127,9 +127,39 @@
 ```
 ---
 
-### Задание 3*
-`Выполните конфигурацию master-master репликации. Произведите проверку.`
+## Задание 3*
+
+`Выполните настройку выбранных методов шардинга из задания 2.`
+
+`Пришлите конфиг Docker и SQL скрипт с командами для базы данных.`
 
 ## Ответ.
+
+`На хосте создана структура папок:`
+
+```text
+A:\DB\6_Replication2\
+│
+├─ docker-compose.yml  (основной Docker Compose файл)
+├─ sql\                (папка со скриптами для всех баз)
+│   ├─ userdb_shard_1\
+│   │    └─ init.sql
+│   ├─ userdb_shard_2\
+│   │    └─ init.sql
+│   ├─ userdb_shard_3\
+│   │    └─ init.sql
+│   ├─ catalogdb_shard_1\
+│   │    └─ init.sql
+│   ├─ catalogdb_shard_2\
+│   │    └─ init.sql
+│   ├─ catalogdb_shard_3\
+│   │    └─ init.sql
+│   ├─ storedb_master\
+│   │    └─ init.sql
+│   └─ storedb_slave\
+│        └─ init.sql
+```
+
+`Файлы со скриптами загружены.`
 
 ---
